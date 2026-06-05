@@ -509,7 +509,8 @@
 const MODELOS = {
   A: { nombre: 'Modelo Primaria', talles: [6,8,10,12,14], precio: 25000 },
   B: { nombre: 'Modelo Secundaria', talles: [16,18,20,22,24,26,28,30,32,34], precio: 29000 }
-};
+
+const SIN_STOCK = [28, 30];
 
 let estado = { modelo: null, talle: null, pago: null };
 
@@ -529,10 +530,13 @@ function renderTalles() {
   if (!estado.modelo) { cont.innerHTML = ''; hint.style.display = 'block'; return; }
   hint.style.display = 'none';
   const talles = MODELOS[estado.modelo].talles;
-  cont.innerHTML = talles.map(t => `
-    <button class="talle-btn${estado.talle === t ? ' active' : ''}"
-      onclick="seleccionarTalle(${t})">${t}</button>
-  `).join('');
+  cont.innerHTML = talles.map(t => {
+    const agotado = SIN_STOCK.includes(t);
+    return `<button class="talle-btn${estado.talle === t ? ' active' : ''}${agotado ? ' agotado' : ''}"
+      onclick="${agotado ? '' : `seleccionarTalle(${t})`}"
+      ${agotado ? 'disabled title="Sin stock"' : ''}
+      style="${agotado ? 'position:relative;' : ''}">${t}${agotado ? '<span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;opacity:0.6;">✕</span>' : ''}</button>`;
+  }).join('');
 }
 
 function seleccionarTalle(t) {
