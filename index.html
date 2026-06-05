@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remeras Colegio San Pablo 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #134174;
+    --azul-dark: #0d2d55;
+    --verde: #006944;
+    --verde-light: #00825a;
+    --blanco: #ffffff;
+    --gris: #f0f4f8;
+    --texto: #1a2e3b;
+    --texto-suave: #6b8299;
+    --naranja: #e8a020;
+    --borde: #dde6ef;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--gris);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--azul);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(19,65,116,0.3);
+  }
+  .header-stripe { height: 4px; background: var(--verde); }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-shield {
+    width: 36px; height: 36px; flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-size: 15px; font-weight: 600; color: var(--blanco);
+    letter-spacing: 0.04em;
+  }
+  .header-text p {
+    font-size: 11px; color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--azul-dark) 0%, var(--azul) 60%, #1a5496 100%);
+    color: var(--blanco);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0,105,68,0.15) 0%, transparent 60%);
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.5); text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero h2 {
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 700; line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h2 span { color: var(--naranja); }
+  .hero p {
+    font-size: 15px; color: rgba(255,255,255,0.65);
+    max-width: 400px; margin: 0 auto 28px; line-height: 1.6;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; color: rgba(255,255,255,0.8);
+  }
+  .hero-badge span { color: var(--naranja); font-weight: 600; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  /* ── PRODUCTOS ── */
+  .productos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 580px) {
+    .productos-grid { grid-template-columns: 1fr; }
+  }
+  .producto-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 12px rgba(19,65,116,0.08);
+  }
+  .producto-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(19,65,116,0.15);
+  }
+  .producto-card.selected {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px rgba(19,65,116,0.12);
+  }
+  .producto-preview {
+    background: var(--azul);
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .producto-preview::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 8px;
+    background: var(--verde);
+  }
+  .remera-svg { opacity: 0.9; }
+  .producto-body { padding: 16px 18px 20px; }
+  .producto-nombre {
+    font-size: 15px; font-weight: 600; margin-bottom: 4px;
+  }
+  .producto-talles {
+    font-size: 12px; color: var(--texto-suave); margin-bottom: 12px;
+  }
+  .producto-precio {
+    font-size: 22px; font-weight: 700; color: var(--azul);
+  }
+  .producto-precio sup {
+    font-size: 13px; font-weight: 500; vertical-align: top; margin-top: 4px;
+  }
+  .select-indicator {
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 10px; font-size: 12px; color: var(--texto-suave);
+    transition: color 0.2s;
+  }
+  .producto-card.selected .select-indicator { color: var(--azul); font-weight: 500; }
+  .check-circle {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--borde);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .producto-card.selected .check-circle {
+    background: var(--azul); border-color: var(--azul);
+  }
+  .check-circle svg { display: none; }
+  .producto-card.selected .check-circle svg { display: block; }
+
+  /* ── FORMULARIO ── */
+  .form-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(19,65,116,0.08);
+  }
+  .form-section-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--texto-suave);
+    margin-bottom: 16px; margin-top: 24px;
+  }
+  .form-section-title:first-child { margin-top: 0; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .form-group label { font-size: 12px; font-weight: 500; color: var(--texto-suave); }
+  .form-group input, .form-group select {
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    background: var(--blanco);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 3px rgba(19,65,116,0.1);
+  }
+  .form-group input.error, .form-group select.error {
+    border-color: #e05050;
+  }
+
+  /* Talles grid */
+  .talles-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 4px;
+  }
+  .talle-btn {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    border: 1.5px solid var(--borde);
+    background: var(--blanco);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--texto);
+  }
+  .talle-btn:hover { border-color: var(--azul); background: rgba(19,65,116,0.04); }
+  .talle-btn.active {
+    background: var(--azul); border-color: var(--azul);
+    color: var(--blanco); font-weight: 600;
+  }
+  .talle-btn:disabled {
+    opacity: 0.3; cursor: not-allowed;
+  }
+
+  /* Pago chips */
+  .pago-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pago-chip {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1.5px solid var(--borde);
+    background: var(--blanco);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; color: var(--texto);
+    transition: all 0.15s;
+  }
+  .pago-chip:hover { border-color: var(--azul); }
+  .pago-chip.active {
+    background: var(--azul); border-color: var(--azul);
+    color: var(--blanco);
+  }
+
+  /* Resumen */
+  .resumen-box {
+    background: var(--gris);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 20px 0;
+  }
+  .resumen-row {
+    display: flex; justify-content: space-between;
+    font-size: 13px; color: var(--texto-suave);
+    padding: 4px 0;
+  }
+  .resumen-row.total {
+    font-size: 16px; font-weight: 600; color: var(--texto);
+    border-top: 1px solid var(--borde);
+    margin-top: 8px; padding-top: 12px;
+  }
+  .resumen-row span:last-child { font-weight: 500; color: var(--texto); }
+  .resumen-row.total span:last-child { color: var(--azul); font-size: 20px; }
+
+  /* Submit */
+  .btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--azul);
+    color: var(--blanco);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.03em;
+  }
+  .btn-submit:hover { background: var(--azul-dark); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .nota-transferencia {
+    font-size: 12px; color: var(--texto-suave);
+    text-align: center; margin-top: 10px; line-height: 1.6;
+  }
+  .nota-transferencia strong { color: var(--texto); }
+
+  /* Alert */
+  .alert {
+    background: #fff3e0; border: 1px solid #ffcc80;
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 13px; color: #8a5000;
+    margin-bottom: 16px; display: none;
+  }
+  .alert.show { display: block; }
+
+  /* Success */
+  .success-screen {
+    display: none; text-align: center; padding: 40px 20px;
+  }
+  .success-screen.show { display: block; }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: var(--verde); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .success-screen h3 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  .success-screen p { font-size: 14px; color: var(--texto-suave); line-height: 1.7; max-width: 360px; margin: 0 auto; }
+  .success-resumen {
+    background: var(--gris); border-radius: 12px;
+    padding: 16px 20px; margin: 20px auto;
+    max-width: 360px; text-align: left;
+    font-size: 13px; line-height: 2;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 28px;
+    font-size: 11px; color: var(--texto-suave);
+    border-top: 1px solid var(--borde);
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <svg class="header-shield" viewBox="0 0 146 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="146" height="130" rx="4" fill="#0d2d55"/>
+      <path d="M86.5907 50.2317L75.8207 50.2433L74.396 48.8186L74.3537 33.5589L76.7911 30.3438H68.4123L71.358 33.5397L71.3387 48.6068L69.7022 50.2433L58.9785 50.2317L55.6555 48.8802L59.0902 53.1543L69.8447 53.1658L72.7634 56.0807L75.6783 53.1658L86.4828 53.1543L89.9175 48.8802L86.5907 50.2317ZM72.8443 79.7383L72.4554 57.5246L69.7754 55.3799L72.9405 110L75.5704 55.3799L73.2332 57.5708L72.8443 79.7383Z" fill="white"/>
+      <path d="M88.7623 71.8106H86.991L86.4481 70.1279L85.8975 71.8106H84.1263L85.5586 72.8464L85.0157 74.5329L86.4481 73.4971L87.8728 74.5329L87.3299 72.8464L88.7623 71.8106ZM84.6538 94.0936L84.1109 92.4148L83.5602 94.0936H81.789L83.2214 95.1294L82.6785 96.8198L84.1109 95.7801L85.5355 96.8198L84.9926 95.1294L86.425 94.0936H84.6538ZM58.7821 74.6792L60.2145 73.6435L61.6392 74.6792L61.0963 72.9927L62.5286 71.9569H60.7574L60.2145 70.2781L59.6639 71.9569H57.8926L59.325 72.9927L58.7821 74.6792ZM49.1404 100.231L48.5974 98.5525L48.0468 100.231H46.2756L47.708 101.267L47.165 102.958L48.5974 101.922L50.0221 102.958L49.4792 101.267L50.9116 100.231H49.1404ZM72.3475 83.9552L84.1994 74.9372L83.8452 74.4713L71.9239 83.5432L62.9407 74.7563L62.5325 75.176L71.4542 83.9013L51.5354 99.0569L51.8896 99.5228L71.8739 84.3133L81.7004 93.9242L82.1086 93.5045L72.3475 83.9552Z" fill="white"/>
+    </svg>
+    <div class="header-text">
+      <h1>Colegio San Pablo</h1>
+      <p>Remeras oficiales 2026</p>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <p class="hero-eyebrow">Temporada 2026 · Stock disponible</p>
+  <h2>Remera oficial<br><span>San Pablo</span></h2>
+  <p>Pedido online · Pago por transferencia · Entrega coordinada en el colegio</p>
+  <div class="hero-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Producto oficial · <span>Viadi S.A.</span>
+  </div>
+</section>
+
+<main>
+
+  <!-- PASO 1: ELEGIR MODELO -->
+  <p style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-suave);margin-bottom:14px;">1 · Elegí tu modelo</p>
+  <div class="productos-grid">
+
+    <div class="producto-card" id="card-a" onclick="seleccionarModelo('A')">
+      <div class="producto-preview">
+        <svg class="remera-svg" width="90" height="80" viewBox="0 0 90 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 12 L8 22 L14 36 L26 28 L26 68 L64 68 L64 28 L76 36 L82 22 L70 12 L58 6 Q45 2 32 6 Z" fill="#1a5496" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <rect x="26" y="12" width="4" height="56" fill="#006944"/>
+          <rect x="30" y="12" width="2" height="56" fill="rgba(255,255,255,0.4)"/>
+          <text x="45" y="44" font-family="Jost,sans-serif" font-size="8" fill="rgba(255,255,255,0.5)" text-anchor="middle">T6–T14</text>
+        </svg>
+      </div>
+      <div class="producto-body">
+        <div class="producto-nombre">Modelo Primaria</div>
+        <div class="producto-talles">Talles 6 al 14</div>
+        <div class="producto-precio"><sup>$</sup>25.000</div>
+        <div class="select-indicator">
+          <div class="check-circle">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          Seleccionar
+        </div>
+      </div>
+    </div>
+
+    <div class="producto-card" id="card-b" onclick="seleccionarModelo('B')">
+      <div class="producto-preview">
+        <svg class="remera-svg" width="90" height="80" viewBox="0 0 90 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 12 L8 22 L14 36 L26 28 L26 68 L64 68 L64 28 L76 36 L82 22 L70 12 L58 6 Q45 2 32 6 Z" fill="#1a5496" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <rect x="26" y="12" width="4" height="56" fill="#006944"/>
+          <rect x="30" y="12" width="2" height="56" fill="rgba(255,255,255,0.4)"/>
+          <text x="45" y="44" font-family="Jost,sans-serif" font-size="8" fill="rgba(255,255,255,0.5)" text-anchor="middle">T16–T34</text>
+        </svg>
+      </div>
+      <div class="producto-body">
+        <div class="producto-nombre">Modelo Secundaria</div>
+        <div class="producto-talles">Talles 16 al 34</div>
+        <div class="producto-precio"><sup>$</sup>29.000</div>
+        <div class="select-indicator">
+          <div class="check-circle">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          Seleccionar
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FORMULARIO -->
+  <div class="form-card">
+    <div id="alert-box" class="alert">Por favor completá todos los campos requeridos.</div>
+
+    <div id="form-content">
+      <p class="form-section-title">2 · Elegí el talle</p>
+      <div class="talles-grid" id="talles-container"></div>
+      <p id="talle-hint" style="font-size:11px;color:var(--texto-suave);margin-top:6px;margin-bottom:16px;">Primero seleccioná un modelo arriba.</p>
+
+      <p class="form-section-title">3 · Tus datos</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre y apellido *</label>
+          <input type="text" id="nombre" placeholder="Ej: María González">
+        </div>
+        <div class="form-group">
+          <label>Nombre del alumno/a *</label>
+          <input type="text" id="alumno" placeholder="Ej: Tomás González">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Grado *</label>
+          <select id="grado">
+            <option value="">Seleccioná</option>
+            <optgroup label="Primaria">
+              <option>1° grado</option><option>2° grado</option><option>3° grado</option>
+              <option>4° grado</option><option>5° grado</option><option>6° grado</option><option>7° grado</option>
+            </optgroup>
+            <optgroup label="Secundaria">
+              <option>I Año</option><option>II Año</option><option>III Año</option>
+              <option>IV Año</option><option>V Año</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp *</label>
+          <input type="tel" id="telefono" placeholder="Ej: 11 1234-5678">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" id="email" placeholder="Ej: maria@gmail.com">
+      </div>
+
+      <p class="form-section-title">4 · Forma de pago</p>
+      <div class="pago-chips">
+        <button class="pago-chip" onclick="seleccionarPago('efectivo', this)">💵 Efectivo</button>
+        <button class="pago-chip" onclick="seleccionarPago('transferencia', this)">🏦 Transferencia</button>
+      </div>
+
+      <!-- RESUMEN -->
+      <div class="resumen-box" id="resumen-box" style="display:none;">
+        <div class="resumen-row"><span>Modelo</span><span id="res-modelo">—</span></div>
+        <div class="resumen-row"><span>Talle</span><span id="res-talle">—</span></div>
+        <div class="resumen-row"><span>Alumno/a</span><span id="res-alumno">—</span></div>
+        <div class="resumen-row"><span>Pago</span><span id="res-pago">—</span></div>
+        <div class="resumen-row total"><span>Total</span><span id="res-precio">—</span></div>
+      </div>
+
+      <button class="btn-submit" id="btn-submit" onclick="enviar()">Confirmar pedido</button>
+      <p class="nota-transferencia">
+        Al confirmar te contactamos por WhatsApp para coordinar la entrega y el pago.<br>
+        <strong>Alias:</strong> TU.ALIAS.ACÁ &nbsp;·&nbsp; <strong>CBU:</strong> 0000000000000000000000
+      </p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>¡Pedido recibido!</h3>
+      <p>Gracias por tu pedido. En las próximas horas te contactamos por WhatsApp para coordinar la entrega y confirmar el pago.</p>
+      <div class="success-resumen" id="success-resumen"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Colegio San Pablo · Uniformes 2026 · Cualquier consulta por WhatsApp
+</footer>
+
+<script>
+// ── ESTADO ──────────────────────────────────────────────────────────────
+const MODELOS = {
+  A: { nombre: 'Modelo Primaria', talles: [6,8,10,12,14], precio: 25000 },
+  B: { nombre: 'Modelo Secundaria', talles: [16,18,20,22,24,26,28,30,32,34], precio: 29000 }
+};
+
+let estado = { modelo: null, talle: null, pago: null };
+
+// ── SELECCIÓN MODELO ──────────────────────────────────────────────────
+function seleccionarModelo(m) {
+  estado.modelo = m;
+  estado.talle = null;
+  document.getElementById('card-a').classList.toggle('selected', m === 'A');
+  document.getElementById('card-b').classList.toggle('selected', m === 'B');
+  renderTalles();
+  actualizarResumen();
+}
+
+function renderTalles() {
+  const cont = document.getElementById('talles-container');
+  const hint = document.getElementById('talle-hint');
+  if (!estado.modelo) { cont.innerHTML = ''; hint.style.display = 'block'; return; }
+  hint.style.display = 'none';
+  const talles = MODELOS[estado.modelo].talles;
+  cont.innerHTML = talles.map(t => `
+    <button class="talle-btn${estado.talle === t ? ' active' : ''}"
+      onclick="seleccionarTalle(${t})">${t}</button>
+  `).join('');
+}
+
+function seleccionarTalle(t) {
+  estado.talle = t;
+  renderTalles();
+  actualizarResumen();
+}
+
+// ── PAGO ──────────────────────────────────────────────────────────────
+function seleccionarPago(p, el) {
+  estado.pago = p;
+  document.querySelectorAll('.pago-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  actualizarResumen();
+}
+
+// ── RESUMEN ───────────────────────────────────────────────────────────
+function actualizarResumen() {
+  const box = document.getElementById('resumen-box');
+  const alumno = document.getElementById('alumno').value.trim();
+  if (!estado.modelo && !estado.talle && !estado.pago) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const m = estado.modelo ? MODELOS[estado.modelo] : null;
+  document.getElementById('res-modelo').textContent = m ? m.nombre : '—';
+  document.getElementById('res-talle').textContent = estado.talle ? `Talle ${estado.talle}` : '—';
+  document.getElementById('res-alumno').textContent = alumno || '—';
+  document.getElementById('res-pago').textContent = estado.pago
+    ? (estado.pago === 'efectivo' ? 'Efectivo' : 'Transferencia') : '—';
+  document.getElementById('res-precio').textContent = m
+    ? '$' + m.precio.toLocaleString('es-AR') : '—';
+}
+
+document.getElementById('alumno').addEventListener('input', actualizarResumen);
+
+// ── ENVÍO ─────────────────────────────────────────────────────────────
+async function enviar() {
+  const nombre   = document.getElementById('nombre').value.trim();
+  const alumno   = document.getElementById('alumno').value.trim();
+  const grado    = document.getElementById('grado').value;
+  const telefono = document.getElementById('telefono').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const alertBox = document.getElementById('alert-box');
+
+  const errores = [];
+  if (!estado.modelo) errores.push('modelo de remera');
+  if (!estado.talle)  errores.push('talle');
+  if (!nombre)        errores.push('nombre y apellido');
+  if (!alumno)        errores.push('nombre del alumno/a');
+  if (!grado)         errores.push('grado');
+  if (!telefono)      errores.push('WhatsApp');
+  if (!email)         errores.push('email');
+  if (!estado.pago)   errores.push('forma de pago');
+
+  if (errores.length) {
+    alertBox.textContent = `Completá los siguientes campos: ${errores.join(', ')}.`;
+    alertBox.classList.add('show');
+    alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  alertBox.classList.remove('show');
+
+  const modelo = MODELOS[estado.modelo];
+  const datos = {
+    modelo:      modelo.nombre,
+    talle:       `Talle ${estado.talle}`,
+    precio:      `$${modelo.precio.toLocaleString('es-AR')}`,
+    nombre,
+    alumno,
+    grado,
+    telefono,
+    email,
+    pago:        estado.pago === 'efectivo' ? 'Efectivo' : 'Transferencia',
+  };
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  // ── FORMSPREE ─────────────────────────────────────────────────────
+  // 👉 Reemplazá YOUR_FORM_ID con tu endpoint de Formspree
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  try {
+    await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+  } catch(e) {
+    // Si falla Formspree igual mostramos success (el pedido igual puede registrarse)
+    console.warn('Formspree error:', e);
+  }
+
+  // ── GOOGLE APPS SCRIPT ────────────────────────────────────────────
+  // 👉 Reemplazá YOUR_APPS_SCRIPT_URL con tu URL de Apps Script
+  const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
+  } catch(e) {
+    console.warn('Apps Script error:', e);
+  }
+
+  // Success
+  document.getElementById('form-content').style.display = 'none';
+  const ss = document.getElementById('success-screen');
+  ss.classList.add('show');
+  document.getElementById('success-resumen').innerHTML = `
+    <strong>${nombre}</strong><br>
+    Alumno/a: ${alumno} · ${grado}<br>
+    Remera: ${modelo.nombre} · Talle ${estado.talle}<br>
+    Total: $${modelo.precio.toLocaleString('es-AR')}<br>
+    Pago: ${datos.pago}
+  `;
+  ss.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
